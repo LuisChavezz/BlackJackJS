@@ -1,0 +1,42 @@
+@charset "utf-8";
+
+/* Carga de Fuentes */
+@font-face{
+    font-family: "robotoB";
+    src: url("../fonts/Roboto-Black.ttf");
+}
+
+@font-face{
+    font-family: "roboto";
+    src: url("../fonts/Roboto-Regular.ttf");
+}
+
+@font-face{
+    font-family: "exo";
+    src: url("../fonts/Exo.otf");
+}
+
+/* Margenes, bordes y estilo de texto */
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+}
+
+/* Border-Box Config */
+html {
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+/* Body */
+body{
+    background-color: rgb(21, 32, 43);
+}
+
+img{
+    max-height: 100%;
+}

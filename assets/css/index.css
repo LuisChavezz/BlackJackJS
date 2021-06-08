@@ -1,0 +1,53 @@
+/* Header */
+header{
+    width: 100%;
+    height: 100px;
+    padding: 20px 50px;
+
+    display: flex;
+    align-items: flex-end;
+}
+
+header p{
+    font-family: exo;
+    font-size: 2em;
+    color: white;
+
+    margin-right: 5px;
+}
+
+/* Buttons */
+.buttons{ margin: 20px 50px; }
+
+.buttons button{
+    margin-right: 10px;
+    border: none;
+    border-radius: 50px;
+    padding: 10px 0;
+    width: 100px;
+    background-color: rgb(91, 192, 222);
+}
+
+.buttons button:hover{
+    background-color: rgb(27, 116, 143);
+    cursor: pointer;
+}
+
+/* Cartas */
+.player{ margin: 20px; }
+.player h1{
+    margin-bottom: 20px;
+    color: white;
+    font-family: robotoB;
+}
+
+.card{
+    width: 150px;
+    position: relative;
+    left: 100px;
+    margin-left: -80px;
+}
+
+.playerCards, .cpuCards{
+    height: 250px;
+}
