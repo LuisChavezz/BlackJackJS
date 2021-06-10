@@ -34,7 +34,7 @@ header p{
 }
 
 /* Cartas */
-.player{ margin: 20px; }
+.player{ margin: 20px 50px; }
 .player h1{
     margin-bottom: 20px;
     color: white;
