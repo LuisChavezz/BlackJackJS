@@ -11,10 +11,10 @@ const specialCards  = ['A', 'K', 'Q', 'J'];
 let deck            = [];
 
 
-
-
 /* Funciones */
-const createDeck = () => { // Creará el mazo inicial de juego.
+
+// Crear deck inicial de la partida
+const createDeck = () => { 
     for( let i = 2; i <= 10; i++ ) { 
 
         for( let type of cardTypes ) {
@@ -29,7 +29,36 @@ const createDeck = () => { // Creará el mazo inicial de juego.
         }
     }
 
-    return  _.shuffle( deck ); // Reordena los elementos dentro del array de forma aleatoria.
+    deck = _.shuffle( deck ); // Reordena los elementos dentro del array de forma aleatoria.
+
+    return deck;  
 }
 
-console.log( createDeck() );
+// Tomar carta del deck
+const drawCard = () => ( deck.pop() ); // Retorna el último elemento eliminado del array 'deck'
+
+
+// Valor de cada carta
+const cardValue = ( card ) => { // (el parámetro a recibir será lo que retorne la funcion 'drawCard')
+    const valor = card.substring( 0, card.length - 1 ); // guarda los caracteresd el string a partir de x posición. A excepción del último caracter ( .length-1 )
+
+    return ( isNaN( valor ) ) ? // (Condiciones explicadas de manera tradicional abajo)
+                (( valor === 'A' ) ? 11 : 10 ) 
+                : parseInt( valor );
+                
+
+    /*if( isNaN( valor ) ) { // Sí 'valor' no es un número.
+        pts = ( valor === 'A' ) ? 11 : 10; // Sí el valor de la carta es una 'Ace' asigna 11 pts, 
+            //si no es un 'Ace' se asignarán 10 pts (porque significa que son (J, Q o K))
+    
+    } else { // Sí 'valor es un número
+        pts = parseInt( valor ); // Convierte los caracteres de número a número entenro.
+    }*/
+}
+
+
+
+createDeck();
+//console.log( drawCard() );
+//console.log( deck );
+console.log( cardValue( drawCard() ) );
