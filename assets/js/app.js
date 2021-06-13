@@ -9,7 +9,17 @@
 const cardTypes     = ['C', 'D', 'H', 'S'];
 const specialCards  = ['A', 'K', 'Q', 'J'];
 let deck            = [];
+let ptsPlayer = 0,
+    ptsCPU    = 0;
 
+
+/* Referencias HTML */
+const buttonDraw    = document.querySelector( '#draw' );
+const buttonStand    = document.querySelector( '#stand' );
+const puntosPlayer  = document.querySelector( '#puntosPlayer' );
+const puntosCPU     = document.querySelector( '#puntosCPU' );
+const playerCards   = document.querySelector( '.playerCards' );
+const cpuCards      = document.querySelector( '.cpuCards' );
 
 /* Funciones */
 
@@ -35,7 +45,11 @@ const createDeck = () => {
 }
 
 // Tomar carta del deck
-const drawCard = () => ( deck.pop() ); // Retorna el último elemento eliminado del array 'deck'
+const drawCard = () => { // Retorna el último elemento eliminado del array 'deck'
+    const card = deck.pop();
+
+    return card;
+}
 
 
 // Valor de cada carta
@@ -56,9 +70,56 @@ const cardValue = ( card ) => { // (el parámetro a recibir será lo que retorne
     }*/
 }
 
+console.log(createDeck());
+
+const cpuTurn = ( minPTS ) => { // El turno de la computadora
+    do{
+        const card = drawCard();
+
+        ptsCPU = ptsCPU + cardValue( card ); // Asignará el valor de la carta robada, a los pts del jugador
+        puntosCPU.innerText = ptsCPU;
+
+        // Creación del elemento HTML de la carta
+        const imgCard   = document.createElement( 'img' ); // Crear el elemento HTML de una imagen
+        imgCard.src     = `assets/img/cartas/${ card }.png`; // Añade la ruta de donde traerá la imagen de la carta
+        imgCard.classList.add('card'); // Añade la clase para los estilos CSS
+        cpuCards.append( imgCard ); // Adjunta el nuevo elemento HTML al contenedor de las cartas
 
 
-createDeck();
-//console.log( drawCard() );
-//console.log( deck );
-console.log( cardValue( drawCard() ) );
+    } while( (ptsCPU <= minPTS) && (minPTS < 21) );
+}
+
+/* Eventos */
+
+// Evento click 'Draw Card'
+buttonDraw.addEventListener( 'click', () => {
+    const card = drawCard();
+
+    ptsPlayer = ptsPlayer + cardValue( card ); // Asignará el valor de la carta robada, a los pts del jugador
+    puntosPlayer.innerText = ptsPlayer;
+
+    // Creación del elemento HTML de la carta
+    const imgCard   = document.createElement( 'img' ); // Crear el elemento HTML de una imagen
+    imgCard.src     = `assets/img/cartas/${ card }.png`; // Añade la ruta de donde traerá la imagen de la carta
+    imgCard.classList.add('card'); // Añade la clase para los estilos CSS
+    playerCards.append( imgCard ); // Adjunta el nuevo elemento HTML al contenedor de las cartas
+
+    if( ptsPlayer > 21 ) {
+        buttonDraw.disabled = true;
+        buttonStand.disabled = true;
+        alert('Superaste los 21 puntos, HAS PERDIDO.');
+        cpuTurn(ptsPlayer); // Inicia el turno de la computadora
+    } 
+    else if ( ptsPlayer == 21 ) {
+        buttonDraw.disabled = true;
+        buttonStand.disabled = true;
+        alert('Felicidades, tienes un 21! ERES EL GANADOR.');
+    }
+    
+});
+
+buttonStand.addEventListener( 'click', () => {
+    buttonDraw.disabled  = true;
+    buttonStand.disabled = true;
+    cpuTurn(ptsPlayer);
+});
