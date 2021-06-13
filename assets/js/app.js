@@ -14,8 +14,9 @@ let ptsPlayer = 0,
 
 
 /* Referencias HTML */
+const buttonNew     = document.querySelector( '#newGame' );
 const buttonDraw    = document.querySelector( '#draw' );
-const buttonStand    = document.querySelector( '#stand' );
+const buttonStand   = document.querySelector( '#stand' );
 const puntosPlayer  = document.querySelector( '#puntosPlayer' );
 const puntosCPU     = document.querySelector( '#puntosCPU' );
 const playerCards   = document.querySelector( '.playerCards' );
@@ -70,7 +71,7 @@ const cardValue = ( card ) => { // (el parámetro a recibir será lo que retorne
     }*/
 }
 
-console.log(createDeck());
+createDeck();
 
 const cpuTurn = ( minPTS ) => { // El turno de la computadora
     do{
@@ -85,8 +86,24 @@ const cpuTurn = ( minPTS ) => { // El turno de la computadora
         imgCard.classList.add('card'); // Añade la clase para los estilos CSS
         cpuCards.append( imgCard ); // Adjunta el nuevo elemento HTML al contenedor de las cartas
 
+    } while( (ptsCPU < minPTS) && (minPTS <= 21) );
 
-    } while( (ptsCPU <= minPTS) && (minPTS < 21) );
+    setTimeout(() => { // Ejecuta los alerts después de terminar el ciclo.
+        if( ptsCPU > 21 ) {
+            ( ptsPlayer == 21 ) ? alert('Felicidades, tienes 21 pts! ERES EL GANADOR.')  : alert('Felicidades, ERES EL GANADOR.');
+        }
+        else if( (ptsCPU > ptsPlayer) && (ptsPlayer < 21) ){
+            alert('HAS PERDIDO.');
+        }
+        else if( ptsPlayer > 21 ){
+            alert('Superaste los 21 pts, HAS PERDIDO'); 
+        }
+        else if( ptsCPU == ptsPlayer ){
+            ( ptsCPU == 21 && ptsPlayer == 21) ? alert('EMPATE, ambos tienen 21 pts') : alert('EMPATE');
+        }
+    }, 200); //milisegundos
+
+    
 }
 
 /* Eventos */
@@ -107,13 +124,12 @@ buttonDraw.addEventListener( 'click', () => {
     if( ptsPlayer > 21 ) {
         buttonDraw.disabled = true;
         buttonStand.disabled = true;
-        alert('Superaste los 21 puntos, HAS PERDIDO.');
         cpuTurn(ptsPlayer); // Inicia el turno de la computadora
     } 
     else if ( ptsPlayer == 21 ) {
         buttonDraw.disabled = true;
         buttonStand.disabled = true;
-        alert('Felicidades, tienes un 21! ERES EL GANADOR.');
+        cpuTurn(ptsPlayer); // Inicia el turno de la computadora
     }
     
 });
@@ -122,4 +138,8 @@ buttonStand.addEventListener( 'click', () => {
     buttonDraw.disabled  = true;
     buttonStand.disabled = true;
     cpuTurn(ptsPlayer);
+});
+
+buttonNew.addEventListener( 'click', () => {
+    location.reload();
 });
